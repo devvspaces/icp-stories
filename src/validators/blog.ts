@@ -62,7 +62,9 @@ export class UpdateBlogDto {
 
   @IsObject()
   @IsOptional()
-  @IsSocial()
+  @IsSocial({
+    message: `Socials must be a valid URL and one of ${SOCIALS.join(", ")}`,
+  })
   socials?: Record<string, string>;
 
   constructor(data: Partial<UpdateBlogDto>) {
