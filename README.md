@@ -89,3 +89,119 @@ http://bkyz2-fmaaa-aaaaa-qaaaq-cai.localhost:8000
 With this URL, you can interact with the canister using an HTTP client of your choice. We are going to use `curl`.
 
 Then using Postman or curl, you can interact with the canister.
+
+
+### Types
+
+These are the types used in the canister.
+
+#### Member
+
+```ts
+class Member {
+  id: string;
+  username: string;
+  name: string;
+  tagline?: string | null;
+  bio?: string | null;
+  image?: string | null;
+  genres?: string[];
+  createdAt: Date;
+  updatedAt?: Date | null;
+  blogs: string[];
+}
+```
+
+This is the type of a member. A member can have one or more blogs.
+
+
+#### Blog
+
+```ts
+class Blog {
+  id: string;
+  userId: string;
+  name: string;
+  about: string;
+  socials: Record<string, string>;
+  series: string[];
+  posts: string[];
+  createdAt: Date;
+  updatedAt: Date | null;
+}
+```
+
+This is the type of a blog. A blog can have one or more posts. A blog can also have one or more series. Series are a collection of posts.
+
+
+#### Series
+
+```ts
+class Series {
+  id: string;
+  name: string;
+  userId: string;
+  blogId: string;
+  description: string;
+  cover_image?: string | null;
+  genres?: string[];
+  sorting: SeriesSorting;
+  posts: string[];
+  createdAt: Date;
+  updatedAt?: Date | null;
+}
+```
+
+This is the type of a series. A series can have one or more posts.
+
+
+#### Post & Comment
+
+```ts
+class Post {
+  id: string;
+  userId: string;
+  blogId: string;
+  seriesId?: string | null;
+  status: PostStatus;
+  title: string;
+  slug: string;
+  subtitle?: string | null;
+  content: string;
+  genres?: string[];
+  cover_image?: string | null;
+  seo_title?: string | null;
+  seo_description?: string | null;
+  canonical_url?: string | null;
+  createdAt: Date;
+  updatedAt: Date | null;
+  comment_enabled: boolean;
+}
+
+class Comment {
+  id: string;
+  userId: string;
+  content: string;
+  createdAt: Date;
+}
+```
+
+This is the type of a post and a comment. A post can have one or more comments.
+
+### Endpoints
+
+These are the endpoints available in the canister.
+
+#### Create a user
+
+Endpoint: `POST /auth/register`
+
+Sample payload:
+
+```json
+{
+    "username": "testing102",
+    "name": "john doe",
+    "tagline": "amazing developer"
+}
+```
