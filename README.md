@@ -195,7 +195,6 @@ These are the endpoints available in the canister.
 #### Create a user
 
 Endpoint: `POST /auth/register`
-
 Sample payload:
 
 ```json
@@ -205,3 +204,213 @@ Sample payload:
     "tagline": "amazing developer"
 }
 ```
+
+#### Get a user by id
+
+Endpoint: `GET /auth/account/:id`
+
+#### Get a user by username
+
+Endpoint: `GET /auth/account/by-username/:username`
+
+#### Update a user
+
+Endpoint: `PATCH /auth/account/:id`
+
+Sample payload:
+
+```json
+{
+    "name": "john doe",
+    "tagline": "amazing developer",
+    "bio": "I am an amazing developer",
+    "genres": []
+}
+```
+
+#### Delete a user
+
+Endpoint: `DELETE /auth/account/:id`
+
+#### Get all users
+
+Endpoint: `GET /auth/account/list`
+
+#### Create a blog
+
+Endpoint: `POST /blogs/create/:userId`
+
+Sample payload:
+
+```json
+{
+    "name": "Blockchainer",
+    "about": "amazing developer",
+    "socials": {
+        "twitter": "https://x.com/netrobeweb"
+    }
+}
+```
+
+#### Get a blog by id
+
+Endpoint: `GET /blogs/:id`
+
+#### Update a blog
+
+Endpoint: `PATCH /blogs/:id`
+
+Sample payload:
+
+```json
+{
+    "name": "Blockchainer - [UPDATED]",
+    "about": "amazing developer",
+    "socials": {
+        "twitter": "https://x.com/netrobeweb",
+        "github": "https://x.com/netrobeweb"
+    }
+}
+```
+
+#### Delete a blog
+
+Endpoint: `DELETE /blogs/:id`
+
+#### Get all blogs
+
+Endpoint: `GET /blogs`
+
+#### Get all series
+
+Endpoint: `GET /series`
+
+#### Get all user series
+
+Endpoint: `GET /series/list/user/:userId`
+
+#### Get all blog series
+
+Endpoint: `GET /series/list/blog/:blogId`
+
+#### Create a series
+
+Endpoint: `POST /series/create/:userId`
+
+Sample payload:
+
+```json
+{
+    "blogId": "533e2a5a-a92e-41ad-a2b8-4054036e908e",
+    "name": "Creating an NFT Collection on ICP",
+    "description": "amazing developer",
+    "sorting": "oldest_first",
+    "genres": ["blockchain"],
+    "cover_image": null
+}
+```
+
+#### Get a series by id
+
+Endpoint: `GET /series/:id`
+
+#### Update a series
+
+Endpoint: `PATCH /series/:id`
+
+Sample payload:
+
+```json
+{
+    "name": "Creating an NFT Collection on ICP",
+    "description": "amazing developer",
+    "sorting": "oldest_first",
+    "genres": ["blockchain"],
+    "cover_image": null
+}
+```
+
+#### Delete a series
+
+Endpoint: `DELETE /series/:id`
+
+#### Get all posts
+
+Endpoint: `GET /posts`
+
+#### Get all user posts
+
+Endpoint: `GET /posts/user/:userId`
+
+#### Get all blog posts
+
+Endpoint: `GET /posts/blog/:blogId`
+
+#### Get all series posts
+
+Endpoint: `GET /posts/series/:seriesId`
+
+#### Create a post
+
+Endpoint: `POST /posts/create/:userId`
+
+Sample payload:
+
+```json
+{
+    "blogId": "f9579672-c745-4256-89d1-11d1833b5dba",
+    "title": "Creating an NFT Collection on ICP",
+    "subtitle": "amazing developer",
+    "status": "draft",
+    "slug": "creating-an-nft-collection-on-icp",
+    "genres": ["blockchain"],
+    "content": "# Hi today we will learn about NFTs",
+    "comment_enabled": true
+}
+```
+
+#### Get a post by id
+
+Endpoint: `GET /posts/:id`
+
+#### Update a post
+
+Endpoint: `PATCH /posts/:id`
+
+Sample payload:
+
+```json
+{
+    "status": "published",
+    "comment_enabled": true
+}
+```
+
+#### Delete a post
+
+Endpoint: `DELETE /posts/:id`
+
+#### Create post comment
+
+Endpoint: `POST /posts/:userId/comment`
+
+Sample payload:
+
+```json
+{
+    "postId": "20883cb4-155f-437d-90c0-6001fd61f9fd",
+    "content": "# Hi today we will learn about NFTs"
+}
+```
+
+#### Delete a post comment
+
+Endpoint: `DELETE /posts/:postId/comment/:commentId`
+
+### Simple Use case
+
+1. A user creates an account
+2. A user creates a blog
+3. A user creates a series
+4. A user creates a post
+5. A user creates a comment on a post
