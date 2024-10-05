@@ -1,9 +1,13 @@
-import { registerDecorator, ValidationOptions, ValidationArguments } from 'class-validator';
+import {
+  registerDecorator,
+  ValidationOptions,
+  ValidationArguments,
+} from "class-validator";
 
 export function IsSlug(validationOptions?: ValidationOptions) {
   return function (object: Object, propertyName: string) {
     registerDecorator({
-      name: 'IsSlug',
+      name: "IsSlug",
       target: object.constructor,
       propertyName: propertyName,
       constraints: [],
@@ -15,4 +19,11 @@ export function IsSlug(validationOptions?: ValidationOptions) {
       },
     });
   };
+}
+
+export function removeUndefined<T extends object>(obj: T): T {
+  Object.keys(obj).forEach(
+    (key) => (obj as any)[key] === undefined && delete (obj as any)[key]
+  );
+  return obj;
 }

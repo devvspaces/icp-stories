@@ -1,8 +1,9 @@
 import { withErrorHandling } from "../helpers/errorHandler";
 import SeriesRepository from "../repositories/series";
+import { CreateSeriesDto, UpdateSeriesDto } from "../validators/series";
 
 export const createSeries = withErrorHandling(async (req, res) => {
-  res.json(SeriesRepository.create(req.params.userId, req.body));
+  res.json(SeriesRepository.create(req.params.userId, CreateSeriesDto.fromPlain(req.body)));
 });
 
 export const getSeries = withErrorHandling(async (req, res) => {
@@ -18,7 +19,7 @@ export const deleteSeries = withErrorHandling(async (req, res) => {
 });
 
 export const updateSeries = withErrorHandling(async (req, res) => {
-  res.json(SeriesRepository.update(req.params.id, req.body));
+  res.json(SeriesRepository.update(req.params.id, UpdateSeriesDto.fromPlain(req.body)));
 });
 
 export const listUserSeries = withErrorHandling(async (req, res) => {

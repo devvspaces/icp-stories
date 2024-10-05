@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { now } from "../helpers/date";
 import { Series } from "../types";
-import { BSeries } from "../models";
+import { Blogs, BSeries } from "../models";
 import { NotFoundException } from "../helpers/errors";
 import { CreateSeriesDto, UpdateSeriesDto } from "../validators/series";
 
@@ -19,6 +19,10 @@ export default class SeriesRepository {
   }
 
   static create(userId: string, data: CreateSeriesDto) {
+    const blog = Blogs.get(data.blogId);
+    if ("None" in blog) {
+      throw new NotFoundException("Blog not found");
+    }
     const series: Series = {
       id: uuidv4(),
       userId,
@@ -28,6 +32,7 @@ export default class SeriesRepository {
       ...data,
     };
     BSeries.insert(series.id, series);
+    return series;
   }
 
   static get(id: string) {

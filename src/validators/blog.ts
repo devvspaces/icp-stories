@@ -1,3 +1,4 @@
+import { Expose, plainToClass, plainToInstance } from "class-transformer";
 import { IsString, IsOptional, IsObject, isURL } from "class-validator";
 
 import {
@@ -5,6 +6,7 @@ import {
   ValidationOptions,
   ValidationArguments,
 } from "class-validator";
+import { removeUndefined } from "./helpers";
 
 export const SOCIALS = [
   "twitter",
@@ -25,7 +27,9 @@ export function IsSocial(validationOptions?: ValidationOptions) {
       options: validationOptions,
       validator: {
         validate(value: Record<string, string>, args: ValidationArguments) {
-          return Object.keys(value).every((key) => SOCIALS.includes(key) && isURL(value[key]));
+          return Object.keys(value).every(
+            (key) => SOCIALS.includes(key) && isURL(value[key])
+          );
         },
       },
     });
@@ -34,13 +38,16 @@ export function IsSocial(validationOptions?: ValidationOptions) {
 
 export class CreateBlogDto {
   @IsString()
+  @Expose()
   name: string;
 
   @IsString()
+  @Expose()
   about: string;
 
   @IsObject()
   @IsOptional()
+  @Expose()
   @IsSocial({
     message: `Socials must be a valid URL and one of ${SOCIALS.join(", ")}`,
   })
@@ -49,19 +56,29 @@ export class CreateBlogDto {
   constructor(data: Partial<CreateBlogDto>) {
     Object.assign(this, data);
   }
+
+  static fromPlain(data: Partial<CreateBlogDto>) {
+    const val = plainToInstance(UpdateBlogDto, data, {
+      excludeExtraneousValues: true,
+    });
+    return removeUndefined(val);
+  }
 }
 
 export class UpdateBlogDto {
   @IsString()
   @IsOptional()
+  @Expose()
   name?: string;
 
   @IsString()
   @IsOptional()
+  @Expose()
   about?: string;
 
   @IsObject()
   @IsOptional()
+  @Expose()
   @IsSocial({
     message: `Socials must be a valid URL and one of ${SOCIALS.join(", ")}`,
   })
@@ -69,5 +86,12 @@ export class UpdateBlogDto {
 
   constructor(data: Partial<UpdateBlogDto>) {
     Object.assign(this, data);
+  }
+
+  static fromPlain(data: Partial<UpdateBlogDto>) {
+    const val = plainToInstance(UpdateBlogDto, data, {
+      excludeExtraneousValues: true,
+    });
+    return removeUndefined(val);
   }
 }
